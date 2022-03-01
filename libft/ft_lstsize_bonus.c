@@ -1,42 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   view_tools.c                                       :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/30 19:34:44 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/01 22:49:14 by cchekov          ###   ########.fr       */
+/*   Created: 2021/05/07 15:14:45 by cchekov           #+#    #+#             */
+/*   Updated: 2021/05/13 00:56:49 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/so_long.h"
+#include "libft.h"
 
-void	view_objects(t_list *list)
+int	ft_lstsize(t_list *lst)
 {
-	t_frame *frame;
-	
-	if (!list)
-		return ;
-	while (list)
-	{
-		frame = (t_frame *)list->content;
-		ft_printf("OBJECT -  pointer %p\n", frame->img);
-		list = list->next;
-	}
-}
+	unsigned int	count;
 
-void	view_map(t_map map)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (i < map.height)
+	count = 0;
+	while (lst)
 	{
-		write(1, map.map[i], map.width);
-		write(1, "\n", 1);
-		i++;
+		lst = lst->next;
+		count++;
 	}
+	return (count);
 }

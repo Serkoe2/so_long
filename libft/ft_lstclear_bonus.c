@@ -1,42 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   view_tools.c                                       :+:      :+:    :+:   */
+/*   ft_lstclear_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/30 19:34:44 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/01 22:49:14 by cchekov          ###   ########.fr       */
+/*   Created: 2021/05/07 18:07:09 by cchekov           #+#    #+#             */
+/*   Updated: 2021/05/13 20:11:32 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/so_long.h"
+#include "libft.h"
 
-void	view_objects(t_list *list)
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	t_frame *frame;
-	
-	if (!list)
+	t_list	*temp;
+	t_list	*next;
+
+	if (!lst || !del)
 		return ;
-	while (list)
+	temp = *lst;
+	while (temp)
 	{
-		frame = (t_frame *)list->content;
-		ft_printf("OBJECT -  pointer %p\n", frame->img);
-		list = list->next;
+		next = temp->next;
+		ft_lstdelone(temp, del);
+		temp = next;
 	}
-}
-
-void	view_map(t_map map)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (i < map.height)
-	{
-		write(1, map.map[i], map.width);
-		write(1, "\n", 1);
-		i++;
-	}
+	*lst = NULL;
 }

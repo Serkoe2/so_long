@@ -1,42 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   view_tools.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/30 19:34:44 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/01 22:49:14 by cchekov          ###   ########.fr       */
+/*   Created: 2021/05/07 14:14:23 by cchekov           #+#    #+#             */
+/*   Updated: 2021/05/07 14:50:16 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/so_long.h"
+#include "libft.h"
 
-void	view_objects(t_list *list)
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	t_frame *frame;
-	
-	if (!list)
+	t_list	*temp;
+
+	if (!lst || !new)
 		return ;
-	while (list)
-	{
-		frame = (t_frame *)list->content;
-		ft_printf("OBJECT -  pointer %p\n", frame->img);
-		list = list->next;
-	}
-}
-
-void	view_map(t_map map)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (i < map.height)
-	{
-		write(1, map.map[i], map.width);
-		write(1, "\n", 1);
-		i++;
-	}
+	temp = *lst;
+	new->next = temp;
+	*lst = new;
 }

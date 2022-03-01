@@ -1,42 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   view_tools.c                                       :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/30 19:34:44 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/01 22:49:14 by cchekov          ###   ########.fr       */
+/*   Created: 2021/05/06 15:08:42 by cchekov           #+#    #+#             */
+/*   Updated: 2021/05/15 21:13:38 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/so_long.h"
+#include "libft.h"
 
-void	view_objects(t_list *list)
+size_t	ft_strlcpy(char *dest, const char *src, size_t n)
 {
-	t_frame *frame;
-	
-	if (!list)
-		return ;
-	while (list)
-	{
-		frame = (t_frame *)list->content;
-		ft_printf("OBJECT -  pointer %p\n", frame->img);
-		list = list->next;
-	}
-}
+	size_t	src_len;
 
-void	view_map(t_map map)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (i < map.height)
+	if (!dest || !src)
+		return (0);
+	src_len = ft_strlen(src);
+	if (src_len == 0)
 	{
-		write(1, map.map[i], map.width);
-		write(1, "\n", 1);
-		i++;
+		*dest = '\0';
+		return (src_len);
 	}
+	if (n == 0)
+		return (src_len);
+	n--;
+	while (n-- && *src)
+		*(dest)++ = *(src)++;
+	*dest = '\0';
+	return (src_len);
 }

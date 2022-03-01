@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 21:10:59 by cchekov           #+#    #+#             */
-/*   Updated: 2021/12/17 10:26:32 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/01 23:37:26 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void make_turn(t_map *map, int x, int y)
 {
     char    place_turn;
 
-    printf("PLAYER_X %d\nPLAYER_Y %d\nF_X %d\nF_Y %d \n",map->player_x, map->player_y, x, y);
+    ft_printf("PLAYER_X %d\nPLAYER_Y %d\nF_X %d\nF_Y %d \n",map->player_x, map->player_y, x, y);
     if (x < 1 || y < 1)
         return ;
     place_turn = map->map[y][x];
@@ -35,10 +35,15 @@ void make_turn(t_map *map, int x, int y)
     map->player_y = y;
 }
 
-int	key_hook(int keycode, t_window *main)
+int	key_hook(int keycode, void *q)
 {
-	printf("Hello from key_hook! %d\n", keycode);
+    t_window    *main;
 
+    main = (t_window*) q;
+	ft_printf("Hello from key_hook! %d\n", keycode);
+    ft_printf("My map\n");
+	view_map(main->map);
+	
     if (keycode == 123)
         make_turn(&(main->map), main->map.player_x - 1, main->map.player_y);
     else if (keycode == 124)
@@ -48,6 +53,7 @@ int	key_hook(int keycode, t_window *main)
     else if (keycode == 126)
         make_turn(&(main->map), main->map.player_x, main->map.player_y - 1);
     mlx_clear_window(main->mlx, main->display);
+    // create_fill_square(&(main->frame), 0x0, 0, 0);
     render(main);
     return (0);
 }

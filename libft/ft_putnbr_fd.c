@@ -1,42 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   view_tools.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/30 19:34:44 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/01 22:49:14 by cchekov          ###   ########.fr       */
+/*   Created: 2021/05/06 15:04:42 by cchekov           #+#    #+#             */
+/*   Updated: 2021/05/11 17:52:40 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/so_long.h"
+#include "libft.h"
 
-void	view_objects(t_list *list)
+void	ft_putnbr_fd(int n, int fd)
 {
-	t_frame *frame;
-	
-	if (!list)
+	if (n == -2147483648)
+	{
+		ft_putstr_fd("-2147483648", fd);
 		return ;
-	while (list)
-	{
-		frame = (t_frame *)list->content;
-		ft_printf("OBJECT -  pointer %p\n", frame->img);
-		list = list->next;
 	}
-}
-
-void	view_map(t_map map)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (i < map.height)
+	if (n < 0)
 	{
-		write(1, map.map[i], map.width);
-		write(1, "\n", 1);
-		i++;
+		ft_putchar_fd('-', fd);
+		n = n * -1;
 	}
+	if (n < 10)
+	{
+		ft_putchar_fd(n + '0', fd);
+		return ;
+	}
+	ft_putnbr_fd(n / 10, fd);
+	ft_putchar_fd(n % 10 + '0', fd);
 }

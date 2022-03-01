@@ -1,42 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   view_tools.c                                       :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/30 19:34:44 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/01 22:49:14 by cchekov          ###   ########.fr       */
+/*   Created: 2021/05/06 15:03:02 by cchekov           #+#    #+#             */
+/*   Updated: 2021/05/15 16:51:06 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/so_long.h"
+#include "libft.h"
 
-void	view_objects(t_list *list)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	t_frame *frame;
-	
-	if (!list)
-		return ;
-	while (list)
-	{
-		frame = (t_frame *)list->content;
-		ft_printf("OBJECT -  pointer %p\n", frame->img);
-		list = list->next;
-	}
-}
+	unsigned char	*ptr_src;
+	unsigned char	*ptr_dest;
 
-void	view_map(t_map map)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (i < map.height)
-	{
-		write(1, map.map[i], map.width);
-		write(1, "\n", 1);
-		i++;
-	}
+	if (!dest && !src)
+		return (NULL);
+	ptr_src = (unsigned char *)src;
+	ptr_dest = (unsigned char *)dest;
+	while (n--)
+		*ptr_dest++ = *ptr_src++;
+	return (dest);
 }

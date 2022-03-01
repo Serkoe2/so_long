@@ -1,42 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   view_tools.c                                       :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/30 19:34:44 by cchekov           #+#    #+#             */
-/*   Updated: 2021/11/01 22:42:17 by cchekov          ###   ########.fr       */
+/*   Created: 2021/04/21 11:03:40 by cchekov           #+#    #+#             */
+/*   Updated: 2021/04/21 11:37:39 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/so_long.h"
+#include "libft.h"
 
-void	view_objects(t_list *list)
+void	ft_bzero(void *dest, size_t n)
 {
-	t_frame *frame;
-	
-	if (!list)
-		return ;
-	while (list)
-	{
-		frame = (t_frame *)list->content;
-		printf("OBJECT - %s, pointer %p\n", frame->name, frame->img);
-		list = list->next;
-	}
-}
+	unsigned char	*ptr;
 
-void	view_map(t_map map)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (i < map.height)
-	{
-		write(1, map.map[i], map.width);
-		write(1, "\n", 1);
-		i++;
-	}
+	ptr = (unsigned char *)dest;
+	while (n--)
+		*ptr++ = '\0';
+	return ;
 }

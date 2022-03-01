@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game.c                                             :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/27 01:13:37 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/01 23:35:28 by cchekov          ###   ########.fr       */
+/*   Created: 2021/04/29 07:19:07 by cchekov           #+#    #+#             */
+/*   Updated: 2021/05/15 21:18:26 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/so_long.h"
+#include "libft.h"
 
-void error_handler(char *error)
+int	ft_atoi(const char *src)
 {
-	ft_putstr_fd(error, 2);
-	exit(0);
-}
+	int	result;
+	int	sign;
 
-
-int main(int argc, char **argv)
-{
-	int		i;
-	t_window *game;
-
-	if (!argc || !*argv)
+	result = 0;
+	if (ft_strlen(src) == 0)
 		return (0);
-	game = create_main(1280, 960);
-	i = 0;
-	read_map(game, (char *)"maps/Agate-Satellite.ber");
-	render(game);
-	mlx_key_hook(game->display, key_hook, (void*)game);
- 	mlx_loop(game->mlx);
+	while (ft_strchr("\n\t\v\f\r ", *src))
+		src++;
+	if (*src == '\0')
+		return (0);
+	if (*src == '-')
+		sign = -1;
+	else
+		sign = 1;
+	if (*src == '+' || *src == '-')
+		src++;
+	while (*src)
+	{
+		if (ft_isdigit(*src) == 0)
+			break ;
+		result = result * 10 + *src - '0';
+		src++;
+	}
+	return (result * sign);
 }

@@ -1,0 +1,17 @@
+# Object files
+*.o
+
+# Game file
+game
+
+w# Lib files
+*.a
+
+# Mac OS files
+*.dSYM*
+.DS_Store
+
+# VS Code files
+.vscode
+
+Tests/

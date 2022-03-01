@@ -6,17 +6,11 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 20:30:58 by cchekov           #+#    #+#             */
-/*   Updated: 2021/12/16 18:39:53 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/02 00:26:57 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/so_long.h"
-
-
-// Первичный анализ - все строки одинакового размера
-// Допустимые 0,1,C,E,P
-// Must have C,E,P
-// Необязательно проверять валидный путь на карте!
 
 void	load_to_array(char **map, t_list *list)
 {
@@ -40,7 +34,6 @@ void	read_file(int fd, t_map *el)
 	t_list	*list;
 	char	*line;
 	char	**map;
-	int		count;
 
 	list = NULL;
 	el->height = 0;
@@ -77,10 +70,10 @@ void	analyze_map(t_map *map)
 	i = 0;
 	// test width
 	while (i < map->height)
-		if (ft_strlen(map->map[i++]) != map->width)
+		if (ft_strlen(map->map[i++]) != (unsigned int)map->width)
 			error_handler("MAP WIDTH ERROR");
 	// test map_border
-	i = map->height - 1;;
+	i = map->height - 1;
 	j = 0;
 	while (j < map->width)
 	{
@@ -90,7 +83,7 @@ void	analyze_map(t_map *map)
 			error_handler("MAP LAST ROW ERROR");
 		j++;
 	}
-	i =  map->height - 1;
+	//строчка ниже лишняя
 	j = map->width - 1;
 	while (i)
 	{

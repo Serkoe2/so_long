@@ -1,42 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   view_tools.c                                       :+:      :+:    :+:   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/30 19:34:44 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/01 22:49:14 by cchekov          ###   ########.fr       */
+/*   Created: 2021/05/06 15:07:47 by cchekov           #+#    #+#             */
+/*   Updated: 2021/05/13 15:27:29 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/so_long.h"
+#include "libft.h"
 
-void	view_objects(t_list *list)
+size_t	ft_strlcat(char *dest, const char *src, size_t n)
 {
-	t_frame *frame;
-	
-	if (!list)
-		return ;
-	while (list)
-	{
-		frame = (t_frame *)list->content;
-		ft_printf("OBJECT -  pointer %p\n", frame->img);
-		list = list->next;
-	}
-}
+	size_t	src_len;
+	size_t	dest_len;
 
-void	view_map(t_map map)
-{
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	while (i < map.height)
-	{
-		write(1, map.map[i], map.width);
-		write(1, "\n", 1);
-		i++;
-	}
+	dest_len = ft_strlen(dest);
+	src_len = ft_strlen(src);
+	if (n <= dest_len)
+		return (n + src_len);
+	dest += dest_len;
+	n = n - dest_len - 1;
+	while (n-- && *src)
+		*dest++ = *src++;
+	*dest = '\0';
+	return (src_len + dest_len);
 }
