@@ -4,7 +4,7 @@
 # Game file
 game
 
-w# Lib files
+# Lib files
 *.a
 
 # Mac OS files
