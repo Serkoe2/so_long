@@ -11,7 +11,5 @@ game
 *.dSYM*
 .DS_Store
 
-# VS Code files
-.vscode
 
 Tests/

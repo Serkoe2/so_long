@@ -18,10 +18,10 @@ void	create_fill_square(t_frame *frame, int color, int x, int y)
 	int w;
 	
 	h = y;
-	while (h)
+	while (h > 0)
 	{
 		w = x;
-		while(w)
+		while(w > 0)
 		{
 			put_pixel_to_frame(frame, w, h, color);
 			w--;
@@ -51,12 +51,11 @@ void    load_images(t_window *main)
 	main->wall_img = *load_image(main, "./assets/walls.xpm");
 	main->countable_img = *load_image(main, "./assets/countables.xpm");
 	main->exit_img = *load_image(main, "./assets/exit.xpm");
-	
 	img.img = mlx_new_image(main->mlx, main->width, main->height);
 	if (!img.img)
 	    error_handler("Fon XPM FAIL");
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel,  &img.line_length, &img.endian);
-	create_fill_square(&img, 0x00000000, main->width, main->height);
+	create_fill_square(&img, 0x00000000, main->width - 1, main->height - 1);
 	main->fon_img = img;
 	main->fon_img.width = main->height;
 	main->fon_img.height = main->width;
@@ -65,7 +64,7 @@ void    load_images(t_window *main)
 t_window *create_main(int width,int height)
 {
     t_window    *main;
-
+	
     main = (t_window *)malloc(sizeof(t_window));
     main->mlx = mlx_init();
     main->display = mlx_new_window(main->mlx, width, height, "Game");

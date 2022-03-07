@@ -13,7 +13,7 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-#include "../minilibx/mlx.h"
+#include "../mlx/mlx.h"
 #include "../libft/libft.h"
 #include "../ft_printf/ft_printf.h"
 #include "../gnl/get_next_line.h"

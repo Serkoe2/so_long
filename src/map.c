@@ -130,6 +130,7 @@ void    read_map(t_window *main, char *name)
     fd = open(name, O_RDONLY);
     if (fd < 2)
         error_handler("FILE ERROR");
+	
 	read_file(fd, &(main->map));
 	close(fd);
 	analyze_map(&(main->map));
