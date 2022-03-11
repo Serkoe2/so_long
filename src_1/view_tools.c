@@ -1,33 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   view_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/05/01 13:12:09 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/09 23:00:15 by cchekov          ###   ########.fr       */
+/*   Created: 2021/10/30 19:34:44 by cchekov           #+#    #+#             */
+/*   Updated: 2022/03/01 22:49:14 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../headers/so_long.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+void	view_objects(t_list *list)
 {
-	char	*boof;
-	size_t	i;
-	size_t	j;	
+	t_frame *frame;
+	
+	if (!list)
+		return ;
+	while (list)
+	{
+		frame = (t_frame *)list->content;
+		ft_printf("OBJECT -  pointer %p\n", frame->img);
+		list = list->next;
+	}
+}
 
-	boof = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
-	if (!boof)
-		return (NULL);
+void	view_map(t_map map)
+{
+	int i;
+	int j;
+
 	i = 0;
 	j = 0;
-	while (s1 && s1[j])
-		boof[i++] = s1[j++];
-	j = 0;
-	while (s2 && s2[j])
-		boof[i++] = s2[j++];
-	boof[i] = '\0';
-	return (boof);
+	while (i < map.height)
+	{
+		write(1, map.map[i], map.width);
+		write(1, "\n", 1);
+		i++;
+	}
 }

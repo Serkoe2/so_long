@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   frame.c                                            :+:      :+:    :+:   */
+/*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/29 17:00:27 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/10 00:07:30 by cchekov          ###   ########.fr       */
+/*   Created: 2022/03/11 22:39:39 by cchekov           #+#    #+#             */
+/*   Updated: 2022/03/12 00:09:43 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/so_long.h"
+#include "so_long.h"
+
 
 void	put_pixel_to_frame(t_frame *frame, int x, int y, int color)
 {
@@ -30,11 +31,10 @@ unsigned int		pull_pixel_frame(t_frame *frame, int x, int y)
 
 void	frame_to_frame(t_frame *from, t_frame *to, int x, int y)
 {
-	int		i;
-	int		j;
-	unsigned int pixel;
+	int		        i;
+	int		        j;
+	unsigned int    pixel;
 	
-	//Frame Size
 	i = 0;
 	while (i < from->height)
 	{
@@ -49,36 +49,33 @@ void	frame_to_frame(t_frame *from, t_frame *to, int x, int y)
 	}
 }
 
-void	render(t_window *game)
+void	render(t_game *game)
 {
 	char	c;
 	int		h;
 	int		w;
+    int     scale;
 
-	
-	//ft_printf("%d %d\n", game->map.player_x, game->map.player_y);
-	printf("%d %d\n", game->map.player_x, game->map.player_y);
-	frame_to_frame(&(game->fon_img), &(game->frame), 0, 0);
-	view_map(game->map);
-
+	//frame_to_frame(&(game->fon_img), &(game->frame), 0, 0);
 	h = 0;
-	while (h < game->map.height)
+    scale = 64;
+	while (h < game->map_height)
 	{
 		w = 0;
-		while (w < game->map.width)
+		while (w < game->map_width)
 		{
-			c = game->map.map[h][w];
+			c = game->map[h][w];
 			if (c == '1')
-				frame_to_frame(&(game->wall_img), &(game->frame), w*64, h*64);
+				frame_to_frame(game->wall_img, game->main, w*scale, h*scale);
 			else if(c == 'C')
-				frame_to_frame(&(game->countable_img), &(game->frame), w*64, h*64);
+				frame_to_frame(game->countable_img, game->main, w*scale, h*scale);
 			else if(c == 'E')
-				frame_to_frame(&(game->exit_img), &(game->frame), w*64, h*64);
+				frame_to_frame(game->exit_img, game->main, w*scale, h*scale);
 			else if(c == 'P')
-				frame_to_frame(&(game->hero_img), &(game->frame), w*64, h*64);
+				frame_to_frame(game->hero_img, game->main, w*scale, h*scale);
 			w++;
 		}
 		h++;
 	}
-	mlx_put_image_to_window(game->mlx, game->display, game->frame.img, 0, 0);
+	mlx_put_image_to_window(game->mlx, game->window, game->main->img, 0, 0);
 }

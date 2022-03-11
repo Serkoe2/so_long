@@ -1,31 +1,29 @@
 NAME = game
-FRAEMWORKS_OLD = -Lmlx -lmlx -framework OpenGL -framework AppKit
+#FRAEMWORKS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 FRAEMWORKS = -framework OpenGL -framework AppKit
 FLAGS_PROD = -Wall -Wextra -Werror
 FLAGS_DEV = -g -Wall -Wextra -Werror
-SRCS =  src/frame.c src/game.c  src/geometry.c src/hooks.c src/init.c src/map.c \
-			src/view_tools.c gnl/get_next_line_utils.c gnl/get_next_line.c
-SRCS_OLD =  src/game.c  \
-		gnl/get_next_line_utils.c gnl/get_next_line.c
+SRCS =  src/game.c src/frame.c src/geometry.c src/hooks.c src/init.c src/map.c src/view_tools.c \
+		src/get_next_line.c
 INCLUDES = libft/libft.a ft_printf/libftprintf.a
 CC = GCC
 OBJS = ${SRCS:.c=.o}
 
+SRCS_1 = src_1/game.c src_1/map.c src_1/get_next_line.c src_1/hooks.c src_1/analyze.c \
+		 src_1/image.c src_1/render.c
+OBJS_1 = ${SRCS_1:.c=.o}
+
 # 	$(CC) $(OBJS) $(INCLUDES) $(FRAEMWORKS_OLD) -o $(NAME)
 all: $(SRCS) $(OBJS) LIBS
-	$(CC) $(OBJS) mlx/libmlx.a $(INCLUDES) $(FRAEMWORKS) -o $(NAME)
+	$(CC) -fsanitize=address $(OBJS) mlx/libmlx.a libft/libft.a  ft_printf/libftprintf.a $(FRAEMWORKS) -o $(NAME)
+
+test: $(SRCS_1) $(OBJS_1) LIBS
+	$(CC) -fsanitize=address $(OBJS_1) mlx/libmlx.a libft/libft.a  ft_printf/libftprintf.a $(FRAEMWORKS) -o $(NAME)
 
 # $(CC) $(FLAGS_DEV)  -Imlx -c $< -o $@
 %.o: %.c
-	$(CC) $(FLAGS_DEV)  -c $< -o $@
+	$(CC) $(FLAGS_DEV) -c $< -o $@
 
-#$(CC) test.o -Lmlx -lmlx mlx/libmlx.a $(FRAEMWORKS) -o test
-test: test.c gnl/get_next_line_utils.o gnl/get_next_line.o test.o LIBS
-	$(CC) test.o gnl/get_next_line_utils.o gnl/get_next_line.o mlx/libmlx.a libft/libft.a $(FRAEMWORKS) -o test
-
-test_clean:
-	rm -f test.o
-	
 LIBS:
 	@make -C mlx all
 	@make -C libft bonus
@@ -41,11 +39,5 @@ clean:
 fclean: clean
 	rm -f $(NAME)
 
-push:
-	git add .
-	git status
-	git commit -m update
-	git push
-
-re: all clean fclean push LIBS
+re: all clean fclean LIBS
 

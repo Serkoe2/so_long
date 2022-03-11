@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/06 15:09:31 by cchekov           #+#    #+#             */
-/*   Updated: 2021/05/13 02:39:15 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/09 22:57:34 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 char	*ft_strchr(const char *src, int c)
 {
-	unsigned char	symb;
-
-	symb = c;
-	if (symb == '\0')
+	if (c == '\0')
 		return ((char *)(src + ft_strlen(src)));
+
 	while (*src != '\0')
 	{
-		if (*src == symb)
+		if (*src == c)
 			return ((char *)src);
 		src++;
 	}

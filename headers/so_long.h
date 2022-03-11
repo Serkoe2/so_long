@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 01:13:33 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/01 23:37:44 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/10 21:30:52 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 #include "../mlx/mlx.h"
 #include "../libft/libft.h"
-#include "../ft_printf/ft_printf.h"
+// #include "../ft_printf/ft_printf.h"
 #include "../gnl/get_next_line.h"
+#include <stdio.h>
 
 typedef struct	s_sett_obj
 {
@@ -78,7 +79,7 @@ t_frame 	*create_object(t_window *main, t_sett_obj set);
 
 /*----------- view ----------*/
 void		view_objects(t_list *list);
-void		view_map(t_map map);
+void		view_map(t_map *map);
 
 /*----------- hooks ----------*/
 int	key_hook(int keycode, void *q);

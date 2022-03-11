@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 20:30:58 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/02 00:26:57 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/11 22:43:02 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,18 @@
 void	load_to_array(char **map, t_list *list)
 {
 	int		i;
-	t_list	*temp;
 
 	i = 0;
 	while (list)
 	{
-		map[i] = (char *)list->content;
-		temp = list;
+		map[i] = ft_strdup((const char *)list->content);
+		printf("LOAD TO ARRAY %p\n", map[i]);
 		list = list->next;
-		free(temp);
 		i++;
 	}
 }
 
-void	read_file(int fd, t_map *el)
+void	read_file(int fd, t_window *main)
 {
 	t_list	*temp;
 	t_list	*list;
@@ -36,25 +34,31 @@ void	read_file(int fd, t_map *el)
 	char	**map;
 
 	list = NULL;
-	el->height = 0;
+	main->map.height = 0;
 	line = get_next_line(fd);
 	while (line)
 	{
-		el->height++;
+		main->map.height++;
 		temp = ft_lstnew((void *)line);
 		if (!temp)
 			error_handler("LIST ERROR");
 		ft_lstadd_back(&list, temp);
 		line = get_next_line(fd);
 	}
-	if (!el->height)
+	if (!main->map.height)
 		error_handler("FILE MAP ERROR");
-	map = (char **)malloc(el->height);
+	map = (char **)malloc(main->map.height);
 	if (!map)
 		error_handler("MAP CREATE ERROR");
+		
+	printf("READ FILE %p %p\n", map, *map);
 	load_to_array(map, list);
-	el->width = ft_strlen(map[0]);
-	el->map = map;
+	ft_lstclear(&list, free);
+	main->map.width = ft_strlen(map[0]);
+	main->map.map = map;
+	printf("READ FILE %p %p\n", map, *(map+10));
+	//printf("READ FILE <APS %p %p\n", main->map);
+	//view_map(main->map);
 }
 
 void	analyze_map(t_map *map)
@@ -130,8 +134,8 @@ void    read_map(t_window *main, char *name)
     fd = open(name, O_RDONLY);
     if (fd < 2)
         error_handler("FILE ERROR");
-	
-	read_file(fd, &(main->map));
+	read_file(fd, main);
 	close(fd);
 	analyze_map(&(main->map));
+	view_map(&(main->map));
 }
