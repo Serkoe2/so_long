@@ -20,6 +20,9 @@ all: $(SRCS) $(OBJS) LIBS
 test: $(SRCS_1) $(OBJS_1) LIBS
 	$(CC) -fsanitize=address $(OBJS_1) mlx/libmlx.a libft/libft.a  ft_printf/libftprintf.a $(FRAEMWORKS) -o $(NAME)
 
+mlx_reload:
+	@make -C mlx clean
+	@make -C mlx all
 # $(CC) $(FLAGS_DEV)  -Imlx -c $< -o $@
 %.o: %.c
 	$(CC) $(FLAGS_DEV) -c $< -o $@

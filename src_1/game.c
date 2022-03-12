@@ -26,6 +26,10 @@ int main(int argc, char **argv)
 	if (!argc || !*argv)
 		return (0);
 
+	// Создание окна
+	game.mlx = mlx_init();
+	game.window = mlx_new_window(game.mlx, 1280, 960, "Game");
+
 	// Загрузка карты
 	game.map = read_map((t_game *)&game, (char *)"maps/Agate-Satellite.ber");
 	// Анализ карты
@@ -33,18 +37,13 @@ int main(int argc, char **argv)
 	// Загрузка картинок
 	load_images((t_game *)&game);
 	
-	// Создание окна
-	game.mlx = mlx_init();
-	game.window = mlx_new_window(game.mlx, 1280, 960, "Game");
-	
+	// Рендер
+	//render((t_game *)&game);
+    
 	// Хуки
 	mlx_loop_hook(game.mlx, render, &game);
-	mlx_key_hook(game.window, key_hook, &game);
-
-	// Рендер
-	render((t_game *)&game);
-	// render(game);
-
+	mlx_hook(game.window, 2, 0, key_hook, &game);
+	mlx_hook(game.window, 17, 0, end_hook, &game);
 	// mlx_key_hook(game->display, key_hook, (void*)game);
 	mlx_loop(game.mlx);
 }

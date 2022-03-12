@@ -23,6 +23,7 @@ void	test_values(t_game *game)
 	i = game->map_height - 1;
 	must_val_E = 0;
 	must_val_P = 0;
+	game->map_countables=0;
 	while (i >= 0)
 	{
 		j = game->map_width - 1;
