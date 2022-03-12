@@ -34,6 +34,17 @@ void make_turn(t_game *game, int x, int y)
     game->map_player_y = y;
 }
 
+int	end_hook(int keycode, void *data)
+{
+    t_game   *game;
+    int     code;
+
+    game = (t_game *)data;
+    code = keycode;
+    return (0);
+}
+
+
 int	key_hook(int keycode, void *data)
 {
     t_game   *game;

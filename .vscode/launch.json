@@ -8,8 +8,8 @@
             "type": "lldb",
             "request": "launch",
             "name": "game",
-            "program": "${workspaceFolder}/game",
-            "args": [],
+            "program": "${workspaceFolder}/so_long",
+            "args": ["Agate-Satellite.ber"],
             "cwd": "${workspaceFolder}"
         },
         {

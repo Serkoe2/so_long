@@ -1,4 +1,4 @@
-NAME = game
+NAME = so_long
 #FRAEMWORKS = -Lmlx -lmlx -framework OpenGL -framework AppKit
 FRAEMWORKS = -framework OpenGL -framework AppKit
 FLAGS_PROD = -Wall -Wextra -Werror
@@ -9,8 +9,9 @@ INCLUDES = libft/libft.a ft_printf/libftprintf.a
 CC = GCC
 OBJS = ${SRCS:.c=.o}
 
-SRCS_1 = src_1/game.c src_1/map.c src_1/get_next_line.c src_1/hooks.c src_1/analyze.c \
+SRCS_1 = src_1/so_long.c src_1/map.c src_1/get_next_line.c src_1/hooks.c src_1/analyze.c \
 		 src_1/image.c src_1/render.c
+
 OBJS_1 = ${SRCS_1:.c=.o}
 
 # 	$(CC) $(OBJS) $(INCLUDES) $(FRAEMWORKS_OLD) -o $(NAME)
@@ -20,9 +21,6 @@ all: $(SRCS) $(OBJS) LIBS
 test: $(SRCS_1) $(OBJS_1) LIBS
 	$(CC) -fsanitize=address $(OBJS_1) mlx/libmlx.a libft/libft.a  ft_printf/libftprintf.a $(FRAEMWORKS) -o $(NAME)
 
-mlx_reload:
-	@make -C mlx clean
-	@make -C mlx all
 # $(CC) $(FLAGS_DEV)  -Imlx -c $< -o $@
 %.o: %.c
 	$(CC) $(FLAGS_DEV) -c $< -o $@

@@ -55,5 +55,6 @@ void	view_map(char **map);
 void	analyze_map(t_game *game);
 void    load_images(t_game *game);
 int		render(void *data);
+int		end_hook(int keycode, void *data);
 
 #endif
