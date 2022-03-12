@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 01:13:33 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/11 23:47:03 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/12 14:04:43 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct	s_game
 	t_frame		*wall_img;
 	t_frame		*countable_img;
 	t_frame		*exit_img;
+	t_frame		*bg_img;
 	t_frame		*main;
 }				t_game;
 
@@ -53,6 +54,6 @@ int		key_hook(int keycode, void *game);
 void	view_map(char **map);
 void	analyze_map(t_game *game);
 void    load_images(t_game *game);
-void	render(t_game *game);
+int		render(void *data);
 
 #endif

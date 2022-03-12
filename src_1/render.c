@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 22:39:39 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/12 00:09:43 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/12 14:26:13 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,15 @@ void	frame_to_frame(t_frame *from, t_frame *to, int x, int y)
 	}
 }
 
-void	render(t_game *game)
+int		render(void *data)
 {
 	char	c;
 	int		h;
 	int		w;
     int     scale;
+	t_game	*game;
 
-	//frame_to_frame(&(game->fon_img), &(game->frame), 0, 0);
+	game = (t_game *)data;
 	h = 0;
     scale = 64;
 	while (h < game->map_height)
@@ -73,9 +74,12 @@ void	render(t_game *game)
 				frame_to_frame(game->exit_img, game->main, w*scale, h*scale);
 			else if(c == 'P')
 				frame_to_frame(game->hero_img, game->main, w*scale, h*scale);
+			else if(c == '0')
+				frame_to_frame(game->bg_img, game->main, w*scale, h*scale);
 			w++;
 		}
 		h++;
 	}
 	mlx_put_image_to_window(game->mlx, game->window, game->main->img, 0, 0);
+	return (0);
 }

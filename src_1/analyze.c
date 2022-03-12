@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 22:43:46 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/12 00:20:27 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/12 13:12:45 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,5 @@ void	analyze_map(t_game *game)
 {
 	test_width(game);
 	test_border(game);
-	test_border(game);
+	test_values(game);
 }
