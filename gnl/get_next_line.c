@@ -6,11 +6,12 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/26 23:08:23 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/09 23:03:28 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/09 23:37:47 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#define BUFFER_SIZE 30
 
 void	clean(char **target)
 {
@@ -60,9 +61,9 @@ char	*if_space_found(char *buffer, char *find, char **iter, char *line)
 		clean(&line);
 		return (line);
 	}
-	temp = ft_strjoin(line, "\n");
-	free(line);
-	return (temp);
+	// temp = ft_strjoin(line, "\n");
+	// free(line);
+	return (line);
 }
 
 char	*work_with_file(int fd, char *line, char **iter)
@@ -105,9 +106,9 @@ char	*get_next_line(int fd)
 	{
 		if (work_with_iter(&line, &iter))
 		{
-			result = ft_strjoin(line, "\n");
-			free(line);
-			return (result);
+			// result = ft_strjoin(line, "\n");
+			// free(line);
+			return (line);
 		}
 	}
 	line = work_with_file(fd, line, &iter);

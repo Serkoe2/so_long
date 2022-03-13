@@ -10,8 +10,8 @@ BODIES = ["Planet", "Asteroid", "Black hole", "Comet", "Constellation", "Galaxy"
 
 class Map_Generator:
     def __init__(self):
-        self.width = 20
-        self.height = 15
+        self.width = 1000
+        self.height = 28
         self.map = []
         self.menu()
 
@@ -57,9 +57,9 @@ class Map_Generator:
         tries = 0
         while True:
             if (tries > 5):
-                name = "{}-{}{}.ber".format(choice(STONES), choice(BODIES), randint(1, 1000))
+                name = "{}-{}({}x{}){}.ber".format(choice(STONES), choice(BODIES), self.width, self.height, randint(1, 1000))
             else:
-                name = "{}-{}.ber".format(choice(STONES), choice(BODIES))
+                name = "{}-{}({}x{}).ber".format(choice(STONES), choice(BODIES), self.width, self.height,)
             if (not path.exists(name)):
                 return name
             tries += 1

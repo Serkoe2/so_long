@@ -9,7 +9,7 @@
             "request": "launch",
             "name": "game",
             "program": "${workspaceFolder}/so_long",
-            "args": ["Agate-Satellite.ber"],
+            "args": ["maps/Fluorite-Satellite(200).ber"],
             "cwd": "${workspaceFolder}"
         },
         {

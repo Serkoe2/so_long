@@ -6,56 +6,74 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 21:10:59 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/10 21:30:25 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/13 18:03:33 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/so_long.h"
+#include "so_long.h"
 
-void make_turn(t_map *map, int x, int y)
+void make_turn(t_game *game, int x, int y)
 {
     char    place_turn;
-    //ft_printf("PLAYER_X %d\nPLAYER_Y %d\nF_X %d\nF_Y %d \n",map->player_x, map->player_y, x, y);
-    printf("PLAYER_X %d\nPLAYER_Y %d\nF_X %d\nF_Y %d \n",map->player_x, map->player_y, x, y);
+
     if (x < 1 || y < 1)
         return ;
-    place_turn = map->map[y][x];
+    place_turn = game->map[y][x];
     if (place_turn == '1')
         return ;
     else if (place_turn == 'C')
-        map->countables--;
-    else if (place_turn == 'E' && map->countables == 0)
-        error_handler("YOU WIN");
-    else if (place_turn == 'E' && map->countables != 0)
+        game->map_countables--;
+    else if (place_turn == 'E' && game->map_countables == 0)
+    {
+        ft_printf("Player made %d steps and collect .. coins \nYOU WIN", game->player_steps);
+        game_clean(game);
+        exit(0);
+    }
+    else if (place_turn == 'E' && game->map_countables != 0)
         return ;
     
-    map->map[map->player_y][map->player_x] = '0';
-    map->map[y][x] = 'P';
-    map->player_x = x;
-    map->player_y = y;
+    game->map[game->map_player_y][game->map_player_x] = '0';
+    game->map[y][x] = 'P';
+    game->map_player_x = x;
+    game->map_player_y = y;
+    game->player_steps += 1;
+    ft_printf("Step %d\n", game->player_steps);
 }
 
-int	key_hook(int keycode, void *q)
+int	end_hook(void *data)
 {
-    t_window    *main;
+    t_game   *game;
 
-    main = (t_window *)q;
-    printf("KEY HOOK %p \n",  &(main->map));
-    printf("Hello from key_hook! %d\n", keycode);
-    printf("My map\n");
-	view_map(&(main->map));
-	
-    // if (keycode == 123)
-    //     make_turn(&(main->map), main->map.player_x - 1, main->map.player_y);
-    // else if (keycode == 124)
-    //     make_turn(&(main->map), main->map.player_x + 1, main->map.player_y);
-    // else if (keycode == 125)
-    //     make_turn(&(main->map), main->map.player_x, main->map.player_y + 1);
-    // else if (keycode == 126)
-    //     make_turn(&(main->map), main->map.player_x, main->map.player_y - 1);
-    //mlx_clear_window(main->mlx, main->display);
-    // create_fill_square(&(main->frame), 0x0, 0, 0);
-    //render(main);
+    game = (t_game *)data;
+    ft_printf("Player made %d steps and collect .. coins \nGame Exit",  game->player_steps);
+    game_clean(game);
+    exit(0);
+    
+    return (0);
+}
+
+
+int	key_hook(int keycode, void *data)
+{
+    t_game   *game;
+
+    game = (t_game *)data;
+    if (keycode == 0)
+        make_turn(game, game->map_player_x - 1, game->map_player_y);
+    else if (keycode == 2)
+        make_turn(game, game->map_player_x + 1, game->map_player_y);
+    else if (keycode == 1)
+        make_turn(game, game->map_player_x, game->map_player_y + 1);
+    else if (keycode == 13)
+        make_turn(game, game->map_player_x, game->map_player_y - 1);
+    else if (keycode == 53)
+    {
+        ft_printf("Player made %d steps and collect .. coins \nGame Exit",  game->player_steps);
+        game_clean(game);
+        exit(0);
+    }
+        
+
     return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 22:43:46 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/12 13:12:45 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/13 15:41:19 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	test_values(t_game *game)
 		{
 			temp = game->map[i][j];
 			if (!ft_strchr("01CEP", temp))
-				error_handler("MAP VALUES ERROR");
+				error_handler("MAP VALUES ERROR", game);
 			if (temp == 'C')
 				game->map_countables++;
 			else if(temp == 'E')
@@ -47,11 +47,11 @@ void	test_values(t_game *game)
 		i--;
 	}
 	if ( must_val_E != 1)
-		error_handler("MAP VALUES ERROR: EXIT UNCORRECT");
+		error_handler("MAP VALUES ERROR: EXIT UNCORRECT", game);
 	if ( must_val_P != 1)
-		error_handler("MAP VALUES ERROR: PLAYER UNCORRECT");
+		error_handler("MAP VALUES ERROR: PLAYER UNCORRECT", game);
 	if ( game->map_countables == 0)
-		error_handler("MAP VALUES ERROR: COUNTABLES NO ONE");
+		error_handler("MAP VALUES ERROR: COUNTABLES NO ONE", game);
 }
 
 void	test_border(t_game *game)
@@ -64,16 +64,16 @@ void	test_border(t_game *game)
 	while (j < game->map_width)
 	{
 		if (game->map[0][j] != '1')
-			error_handler("MAP FIRST ROW ERROR");
+			error_handler("MAP FIRST ROW ERROR", game);
 		if (game->map[i][j] != '1')
-			error_handler("MAP LAST ROW ERROR");
+			error_handler("MAP LAST ROW ERROR", game);
 		j++;
 	}
 	j = game->map_width - 1;
 	while (i)
 	{
 		if (game->map[i][0] != '1' || game->map[i][j] != '1')
-			error_handler("MAP ROW ERROR");
+			error_handler("MAP ROW ERROR", game);
 		i--;
 	}
 }
@@ -83,9 +83,10 @@ void	test_width(t_game *game)
 	int	i;
 	
 	i = 0;
+	game->map_width = ft_strlen(game->map[i++]);
 	while (i < game->map_height)
 		if (ft_strlen(game->map[i++]) != (unsigned int)game->map_width)
-			error_handler("MAP WIDTH ERROR");
+			error_handler("MAP WIDTH ERROR", game);
 }
 
 void	analyze_map(t_game *game)
@@ -93,4 +94,6 @@ void	analyze_map(t_game *game)
 	test_width(game);
 	test_border(game);
 	test_values(game);
+	game->window_width = game->map_width * 64;
+	game->window_height = game->map_height * 64;
 }

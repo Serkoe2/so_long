@@ -6,136 +6,86 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/01 20:30:58 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/11 22:43:02 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/13 17:45:00 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../headers/so_long.h"
+#include "so_long.h"
 
-void	load_to_array(char **map, t_list *list)
+void	view_map(char **map)
 {
-	int		i;
+	int i;
 
 	i = 0;
-	while (list)
+	while (map[i][0])
 	{
-		map[i] = ft_strdup((const char *)list->content);
-		printf("LOAD TO ARRAY %p\n", map[i]);
-		list = list->next;
+		ft_printf("VIEW MAP %p %s\n", map[i], map[i]);
 		i++;
 	}
 }
 
-void	read_file(int fd, t_window *main)
+char	**load_map(int fd, char **map, t_game *game)
 {
-	t_list	*temp;
-	t_list	*list;
 	char	*line;
-	char	**map;
+	int		i;
 
-	list = NULL;
-	main->map.height = 0;
+	i = 0;
 	line = get_next_line(fd);
 	while (line)
-	{
-		main->map.height++;
-		temp = ft_lstnew((void *)line);
-		if (!temp)
-			error_handler("LIST ERROR");
-		ft_lstadd_back(&list, temp);
+	{	
+		map[i] = ft_strdup((const char *)line);
+		free(line);
+		if (!map[i])
+			error_handler("MALLOC ERROR", game);
 		line = get_next_line(fd);
+		i++;
 	}
-	if (!main->map.height)
-		error_handler("FILE MAP ERROR");
-	map = (char **)malloc(main->map.height);
-	if (!map)
-		error_handler("MAP CREATE ERROR");
-		
-	printf("READ FILE %p %p\n", map, *map);
-	load_to_array(map, list);
-	ft_lstclear(&list, free);
-	main->map.width = ft_strlen(map[0]);
-	main->map.map = map;
-	printf("READ FILE %p %p\n", map, *(map+10));
-	//printf("READ FILE <APS %p %p\n", main->map);
-	//view_map(main->map);
+	
+	return (map);
 }
 
-void	analyze_map(t_map *map)
+int		count_line(int fd)
 {
-	int 	i;
-	int 	j;
-	char	temp;
-	int 	must_val_E;
-	int 	must_val_P;
+	char	*line;
+	int		i;
 
-	must_val_E = 0;
-	must_val_P = 0;
 	i = 0;
-	// test width
-	while (i < map->height)
-		if (ft_strlen(map->map[i++]) != (unsigned int)map->width)
-			error_handler("MAP WIDTH ERROR");
-	// test map_border
-	i = map->height - 1;
-	j = 0;
-	while (j < map->width)
-	{
-		if (map->map[0][j] != '1')
-			error_handler("MAP FIRST ROW ERROR");
-		if (map->map[i][j] != '1')
-			error_handler("MAP LAST ROW ERROR");
-		j++;
+	line = get_next_line(fd);
+	while (line)
+	{	
+		line = get_next_line(fd);
+		free(line);
+		i++;
 	}
-	//строчка ниже лишняя
-	j = map->width - 1;
-	while (i)
-	{
-		if (map->map[i][0] != '1' || map->map[i][j] != '1')
-			error_handler("MAP ROW ERROR");
-		i--;
-	}
-	// test map values
-	i =  map->height - 1;
-	while (i >= 0)
-	{
-		j = map->width - 1;
-		while (j >= 0)
-		{
-			temp = map->map[i][j];
-			if (!ft_strchr("01CEP", temp))
-				error_handler("MAP VALUES ERROR");
-			if (temp == 'C')
-				map->countables++;
-			else if(temp == 'E')
-				must_val_E++;
-			else if (temp == 'P')
-			{
-				must_val_P++;
-				map->player_x = j;
-				map->player_y = i;
-			}
-			j--;
-		}
-		i--;
-	}
-	if ( must_val_E != 1)
-		error_handler("MAP VALUES ERROR: EXIT UNCORRECT");
-	if ( must_val_P != 1)
-		error_handler("MAP VALUES ERROR: PLAYER UNCORRECT");
-	if ( map->countables == 0)
-		error_handler("MAP VALUES ERROR: COUNTABLES NO ONE");
+	
+	return (i);
 }
 
-void    read_map(t_window *main, char *name)
+char   **read_map(t_game *game, char *name)
 {
     int		fd;
+	int		lines;
+	char	**map;
 
     fd = open(name, O_RDONLY);
     if (fd < 2)
-        error_handler("FILE ERROR");
-	read_file(fd, main);
+        error_handler("FILE ERROR", NULL);
+	lines = count_line(fd);
 	close(fd);
-	analyze_map(&(main->map));
-	view_map(&(main->map));
+	if (!lines)
+		error_handler("MAP HEIGHT ERROR", NULL);
+	map = (char **)ft_calloc(lines, sizeof(char **));
+	if (!map)
+		error_handler("MALLOC ERROR", NULL);
+	game->map = map;
+	game->map_height =  lines;
+	fd = open(name, O_RDONLY);
+    if (fd < 2)
+        error_handler("FILE ERROR", game);
+	map = load_map(fd, map, game);
+	close(fd);
+	game->map_width = ft_strlen(map[0]);
+	if (!game->map_width)
+		error_handler("MAP WIDTH ERROR", game);
+	return map;
 }
