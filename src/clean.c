@@ -6,16 +6,19 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 14:52:48 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/13 15:48:17 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/13 19:20:06 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	clean_frame(t_game *game, t_frame *frame)
+void	clean_frame(t_game *game, void *data)
 {
-	if (!frame)
+	t_frame	*frame;
+
+	if (!data)
 		return ;
+	frame = (t_frame *)data;
 	mlx_destroy_image(game->mlx, frame->img);
 	free(frame);
 }

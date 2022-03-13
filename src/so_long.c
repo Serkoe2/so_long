@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 01:13:37 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/13 18:58:31 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/13 19:20:10 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void error_handler(char *error, t_game *game)
 void	init(t_game *game)
 {
 	game->player_steps = 0;
+	game->player_countables = 0;
 	game->window = NULL;
 	game->mlx = NULL;
 	game->map = NULL;
@@ -61,7 +62,7 @@ int main(int argc, char **argv)
 	game.map = read_map((t_game *)&game, check_filename(++argv));
 	analyze_map((t_game *)&game);
 	game.player_steps = 0;
-	if (game.window_width > 100 || game.window_height > 100)
+	if (game.map_width > 100 || game.map_height > 100)
 		error_handler("MAP IS TOO LONG", (t_game *)&game);
 	game.mlx = mlx_init();
 	game.window = mlx_new_window(game.mlx, game.window_width, game.window_height, "Game");

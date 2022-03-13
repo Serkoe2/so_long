@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/31 21:10:59 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/13 18:03:33 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/13 19:45:23 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,13 @@ void make_turn(t_game *game, int x, int y)
     if (place_turn == '1')
         return ;
     else if (place_turn == 'C')
+    {
         game->map_countables--;
+        game->player_countables++;
+    }
     else if (place_turn == 'E' && game->map_countables == 0)
     {
-        ft_printf("Player made %d steps and collect .. coins \nYOU WIN", game->player_steps);
+        ft_printf("Player made %d steps and collect %d coins \nYOU WIN", game->player_steps, game->player_countables);
         game_clean(game);
         exit(0);
     }
@@ -45,7 +48,7 @@ int	end_hook(void *data)
     t_game   *game;
 
     game = (t_game *)data;
-    ft_printf("Player made %d steps and collect .. coins \nGame Exit",  game->player_steps);
+    ft_printf("Player made %d steps and collect %d coins \nGame Exit",  game->player_steps, game->player_countables);
     game_clean(game);
     exit(0);
     
@@ -68,7 +71,7 @@ int	key_hook(int keycode, void *data)
         make_turn(game, game->map_player_x, game->map_player_y - 1);
     else if (keycode == 53)
     {
-        ft_printf("Player made %d steps and collect .. coins \nGame Exit",  game->player_steps);
+        ft_printf("Player made %d steps and collect %d coins \nGame Exit",  game->player_steps, game->player_countables);
         game_clean(game);
         exit(0);
     }

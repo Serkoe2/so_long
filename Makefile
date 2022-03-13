@@ -7,13 +7,14 @@ CC = CLANG
 SRCS= src/so_long.c src/map.c gnl/get_next_line.c src/hooks.c src/analyze.c \
 		 src/image.c src/render.c src/clean.c
 OBJS = ${SRCS:.c=.o}
+OBJS_FOLDER = objs/
 
 $(NAME): all
 all: $(OBJS)  LIBS
 	$(CC) $(FLAGS_DEV) $(OBJS)  $(INCLUDES) $(FRAEMWORKS) -o $(NAME)
 
 %.o: %.c 
-	$(CC) $(FLAGS_DEV) $(FLAGS_PROD) -c $< -o $@
+	$(CC)  $(FLAGS_DEV) $(FLAGS_PROD) -c $< -o $@
 
 LIBS:
 	@make -C mlx all

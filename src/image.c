@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 23:23:52 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/13 18:50:48 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/13 19:43:17 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void    load_images(t_game *game)
     
 	game->bg_img = load_image(game, (char *)"./assets/bg.xpm");
 	game->wall_img = load_image(game, (char *)"./assets/walls.xpm");
-	game->hero_img = load_image(game, (char *)"./assets/hero.xpm");
 	game->countable_img = load_image(game, (char *)"./assets/countables.xpm");
+	game->hero_img = load_image(game, (char *)"./assets/hero.xpm");
 	game->exit_img = load_image(game, (char *)"./assets/exit.xpm");
 	
 

@@ -6,7 +6,7 @@
 /*   By: cchekov <cchekov@student.21-school.ru>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 01:13:33 by cchekov           #+#    #+#             */
-/*   Updated: 2022/03/13 17:57:52 by cchekov          ###   ########.fr       */
+/*   Updated: 2022/03/13 19:37:09 by cchekov          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ typedef struct	s_game
 	int			map_player_x;
 	int			map_player_y;
 	int			player_steps;
-	t_frame		*hero_img;
+	int			player_countables;
 	t_frame		*wall_img;
+	t_frame		*hero_img;
 	t_frame		*countable_img;
 	t_frame		*exit_img;
 	t_frame		*bg_img;
